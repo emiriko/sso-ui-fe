@@ -16,7 +16,7 @@
 }
 
 body {
-  color: rgb(148 163 184/var(--tw-text-opacity));
-  background-color: rgb(15 23 42/var(--tw-bg-opacity));
+  color: rgb(148 163 184 / var(--tw-text-opacity));
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
   font-family: 'Inter', sans-serif;
 }
