@@ -1,3 +1,4 @@
+import { AuthContextProvider } from '@/components/contexts';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -8,7 +9,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title> SSO UI </title>
       </Head>
-      <Component {...pageProps} />
+      <AuthContextProvider>
+        <main className="flex min-h-screen">
+          <Component {...pageProps} />
+        </main>
+      </AuthContextProvider>
     </>
   );
 }
