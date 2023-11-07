@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <title> SSO UI </title>
       </Head>
       <AuthContextProvider>
-        <main className="flex min-h-screen">
+        <main className="min-h-screen">
           <Component {...pageProps} />
         </main>
       </AuthContextProvider>
