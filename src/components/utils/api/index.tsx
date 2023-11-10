@@ -27,8 +27,9 @@ const requestInterceptor = async (request: InternalAxiosRequestConfig<any>) => {
           method: 'POST',
           url: '/auth/refresh/',
           headers: {
-            Authorization: `Bearer ${refreshToken}`
-          }
+            Authorization: `Bearer ${refreshToken}`,
+          },
+          withCredentials: true
         });
         Cookies.set('accessToken', data.accessToken);
         token = data.accessToken;
@@ -42,6 +43,8 @@ const requestInterceptor = async (request: InternalAxiosRequestConfig<any>) => {
     request.headers['Authorization'] = `Bearer ${token}`;
   }
   request.headers['Content-Type'] = 'application/json';
+  request.withCredentials = true;
+
   return request;
 };
 
