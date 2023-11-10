@@ -1,13 +1,16 @@
 interface UserProps {
-  email: string;
-  full_name: string;
-  isAnggotaBem: boolean;
-  is_staff: boolean;
+  id: string;
+  name: string;
+  educational_program: string;
+  faculty: string;
+  npm: string;
+  study_program: string;
   username: string;
 }
 
 interface LoginResponse {
-  token: string;
+  refreshToken: string;
+  accessToken: string;
   user: UserProps;
 }
 

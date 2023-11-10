@@ -3,8 +3,14 @@ import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import { Code } from '@/components/code';
 import { Button } from '@/components/button';
+import { useAuth } from '@/components/hooks';
+import { api } from '@/components/utils';
+import { useState } from 'react';
 
 export default function Home() {
+  const { user, isLoading, logout } = useAuth();
+  const [isLoadingLogout, setIsLoadingLogout] = useState<boolean>(false);
+
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24`}
@@ -44,14 +50,57 @@ export default function Home() {
           <Code>secure</Code>, <Code>user-friendly</Code> login experience for
           your application meant for University of Indonesia student.
         </p>
-        <Button>
-          <span> Login </span>
-          <ChevronRightIcon
-            height={12}
-            width={12}
-            className="font-bold text-white "
-          />
-        </Button>
+        {!isLoading && (
+          <>
+            {!user ? (
+              <Button
+                link={`${process.env.NEXT_PUBLIC_SSO_URL}/login?service=${process.env.NEXT_PUBLIC_SERVICE_URL}/`}
+              >
+                <span> Login </span>
+                <ChevronRightIcon
+                  height={12}
+                  width={12}
+                  className="font-bold text-white "
+                />
+              </Button>
+            ) : (
+              <div className="flex flex-col gap-y-8">
+                {' '}
+                <Button>
+                  <span> {user.name} </span>
+                </Button>
+                <Button
+                  logout={true}
+                  cb={async () => {
+                    try {
+                      setIsLoadingLogout(true);
+                      await api({
+                        method: 'POST',
+                        url: `/auth/logout/`
+                      });
+                      logout();
+                    } catch (error) {
+                      console.error(error);
+                    } finally {
+                      setIsLoadingLogout(false);
+                    }
+                  }}
+                >
+                  {!isLoadingLogout ? (
+                    <span> Logout </span>
+                  ) : (
+                    <div className="lds-ellipsis">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  )}
+                </Button>
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left"></div>

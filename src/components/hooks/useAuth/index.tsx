@@ -4,13 +4,14 @@ import Cookies from 'js-cookie';
 export const useAuth = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
-  isLoading: true,
-  login: (token) => {
-    Cookies.set('token', token);
-    set({ isAuthenticated: true });
+  isLoading: false,
+  login: (accessToken, refreshToken, user) => {
+    Cookies.set('accessToken', accessToken);
+    Cookies.set('refreshToken', refreshToken);
+    set({ isAuthenticated: true, user: user });
   },
   logout: () => {
-    Cookies.remove('token');
+    Cookies.remove('accessToken');
     set({ isAuthenticated: false, user: null });
   },
   setUser: (user) => set({ user: user }),

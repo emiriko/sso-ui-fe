@@ -2,18 +2,13 @@ interface LoginResponse {
   token: string;
 }
 
-interface User {
-  email: string;
-  full_name: string;
-}
-
 interface AuthState {
-  user: User | null;
+  user: UserProps | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (token: string) => void;
+  login: (accessToken: string, refreshToken: string, user: UserProps) => void;
   logout: () => void;
-  setUser: (user: User) => void;
+  setUser: (user: UserProps | null) => void;
   setLoading: () => void;
   stopLoading: () => void;
 }
